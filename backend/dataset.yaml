@@ -1,0 +1,33 @@
+train: dataset/train
+val: dataset/val
+
+names:
+  0: appam
+  1: bajji
+  2: biryani
+  3: chapati
+  4: chicken biryani
+  5: chicken curry
+  6: dosa
+  7: edipanm
+  8: egg_biryani
+  9: egg_omelet
+  10: fish_curry
+  11: fish_fry
+  12: friedrice
+  13: grilled_chicken
+  14: idli
+  15: kal_dosa
+  16: mandi
+  17: masala_dosa
+  18: medu_vada
+  19: paratha
+  20: parippu_vada
+  21: pazham_pori
+  22: poori
+  23: puttu
+  24: rava
+  25: rice
+ 
+
+  
