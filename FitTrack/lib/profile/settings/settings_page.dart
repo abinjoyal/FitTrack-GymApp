@@ -29,6 +29,13 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> loadProfile() async {
     final auth = Provider.of<AuthProvider>(context, listen: false);
 
+    if (auth.isGuest) {
+      if (mounted) {
+        setState(() {});
+      }
+      return;
+    }
+
     final data = await supabase
         .from("profiles")
         .select("image_url")
@@ -114,6 +121,14 @@ class _SettingsPageState extends State<SettingsPage> {
                   _tile(
                     "Edit Profile",
                     onTap: () {
+                      if (auth.isGuest) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Guest users cannot edit profile details!"),
+                          ),
+                        );
+                        return;
+                      }
                       Navigator.push(
                         context,
                         PageRouteBuilder(

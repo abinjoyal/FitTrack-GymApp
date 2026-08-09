@@ -14,6 +14,7 @@ import 'thems/colors.dart';
 /// ✅ SERVICES
 import 'services/supabase_service.dart';
 import 'services/notification_service.dart';
+import 'services/firebase_notification_service.dart';
 
 /// 🔥 Exact Alarm Permission
 Future<void> requestExactAlarmPermission() async {
@@ -25,7 +26,8 @@ Future<void> requestExactAlarmPermission() async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  
+  /// 🔔 1. FIREBASE NOTIFICATION INIT (SERVICE)
+  await FirebaseNotificationService.init();
 
   /// 🔔 2. LOCAL NOTIFICATION INIT (SERVICE)
   await NotificationService.init();

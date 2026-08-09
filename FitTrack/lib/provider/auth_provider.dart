@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
   final SupabaseClient _client = Supabase.instance.client;
 
   User? _user;
   bool _isLoading = false;
+  bool _isGuest = false;
 
   /// ================= GETTERS =================
 
   User? get user => _user;
   bool get isLoading => _isLoading;
-  bool get isLoggedIn => _user != null;
+  bool get isLoggedIn => _user != null || _isGuest;
+  bool get isGuest => _isGuest;
 
   String get userId => _user?.id ?? "";
-  String get userEmail => _user?.email ?? "";
+  String get userEmail {
+    if (_isGuest) return "guest@fittrack.com";
+    return _user?.email ?? "";
+  }
 
   String get userName {
+    if (_isGuest) return "Guest User";
     final metadata = _user?.userMetadata;
     return metadata?['name'] ?? "User";
   }
@@ -30,11 +37,37 @@ class AuthProvider extends ChangeNotifier {
 
   AuthProvider() {
     _user = _client.auth.currentUser;
+    _loadGuestStatus();
 
     _client.auth.onAuthStateChange.listen((data) {
       _user = data.session?.user;
+      if (_user != null) {
+        _isGuest = false;
+        _clearGuestStatus();
+      }
       notifyListeners();
     });
+  }
+
+  Future<void> _loadGuestStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    _isGuest = prefs.getBool('is_guest') ?? false;
+    notifyListeners();
+  }
+
+  Future<void> _clearGuestStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('is_guest');
+  }
+
+  /// ================= GUEST LOGIN =================
+
+  Future<void> loginAsGuest() async {
+    _isGuest = true;
+    _user = null;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('is_guest', true);
+    notifyListeners();
   }
 
   /// ================= REGISTER =================
@@ -101,6 +134,9 @@ class AuthProvider extends ChangeNotifier {
   Future<void> logout() async {
     await _client.auth.signOut();
     _user = null;
+    _isGuest = false;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('is_guest');
     notifyListeners();
   }
 

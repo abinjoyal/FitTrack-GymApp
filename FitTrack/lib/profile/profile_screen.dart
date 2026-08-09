@@ -27,9 +27,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     loadProfile();
   }
 
-  /// 🔥 LOAD PROFILE DATA (FIXED)
   Future<void> loadProfile() async {
     final auth = Provider.of<AuthProvider>(context, listen: false);
+
+    if (auth.isGuest) {
+      if (mounted) setState(() {});
+      return;
+    }
 
     final data = await supabase
         .from("profiles")

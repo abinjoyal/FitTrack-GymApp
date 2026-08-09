@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Image.asset(
                         "assets/logo12.png",
                         width: media.size.width * 0.5,
-                        height:media.size .width * 0.5,
+                        height: media.size.width * 0.5,
                         fit: BoxFit.contain,
                       ),
 
@@ -239,7 +239,42 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
 
-                      SizedBox(height: height * 0.00),
+                      SizedBox(height: height * 0.03),
+
+                      /// SKIP / CONTINUE AS GUEST
+                      GestureDetector(
+                        onTap: () async {
+                          final auth = Provider.of<AuthProvider>(
+                            context,
+                            listen: false,
+                          );
+                          await auth.loginAsGuest();
+
+                          if (!mounted) return;
+
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (_, __, ___) =>
+                                  const DashboardScreen(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
+                            (route) => false,
+                          );
+                        },
+                        child: Text(
+                          "Skip & Continue as Guest ➡️",
+                          style: TextStyle(
+                            color: const Color(0xFFD0FD3E),
+                            fontWeight: FontWeight.bold,
+                            fontSize: width * 0.038,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(height: height * 0.02),
                     ],
                   ),
                 ),

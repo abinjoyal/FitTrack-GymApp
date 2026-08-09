@@ -27,6 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final isFirstTime = prefs.getBool('first_time') ?? true;
     final session = Supabase.instance.client.auth.currentSession;
+    final isGuest = prefs.getBool('is_guest') ?? false;
 
     await Future.delayed(const Duration(seconds: 2));
 
@@ -37,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
         context,
         MaterialPageRoute(builder: (_) => const OnboardingScreen()),
       );
-    } else if (session != null) {
+    } else if (session != null || isGuest) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => const DashboardScreen()),
