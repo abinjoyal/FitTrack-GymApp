@@ -22,8 +22,7 @@ FitTrack is a comprehensive fitness and nutrition tracking application built wit
 - **State Management**: [Provider](https://pub.dev/packages/provider)
 - **Local Storage**: [Hive](https://pub.dev/packages/hive) & [Shared Preferences](https://pub.dev/packages/shared_preferences)
 - **Video Player**: [YouTube Player Flutter](https://pub.dev/packages/youtube_player_flutter)
-- **Notifications**: [Flutter Local Notifications](https://pub.dev/packages/flutter_local_notifications) & [Android Alarm Manager Plus](https://pub.dev/packages/android_alarm_manager_plus)
-
+  
 ---
 
 ## Getting Started
