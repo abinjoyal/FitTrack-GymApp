@@ -21,7 +21,7 @@ FitTrack is a comprehensive fitness and nutrition tracking application built wit
 - **Backend & Auth**: [Supabase Flutter](https://pub.dev/packages/supabase_flutter)
 - **State Management**: [Provider](https://pub.dev/packages/provider)
 - **Local Storage**: [Hive](https://pub.dev/packages/hive) & [Shared Preferences](https://pub.dev/packages/shared_preferences)
-- **Video Player**: [YouTube Player Flutter](https://pub.dev/packages/youtube_player_flutter)
+
   
 ---
 
